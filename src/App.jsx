@@ -13,6 +13,7 @@ import AuditLogs from "./pages/AuditLogs.jsx";
 import AutomaticUpdates from "./pages/AutomaticUpdates.jsx";
 import BankPartnersManagement from "./pages/BankPartnersManagement.jsx";
 import RealTimeConversionRates from "./pages/RealTimeConversionRates.jsx";
+import CustomerSupport from "./pages/CustomerSupport.jsx";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route exact path="/real-time-conversion-rates" element={<RealTimeConversionRates />} />
         <Route exact path="/audit-logs" element={<AuditLogs />} />
         <Route exact path="/automatic-updates" element={<AutomaticUpdates />} />
+        <Route exact path="/customer-support" element={<CustomerSupport />} />
       </Routes>
     </Router>
   );
