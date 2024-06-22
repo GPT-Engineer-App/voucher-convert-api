@@ -1,0 +1,84 @@
+# voucher-convert-api
+
+IMPORT NECESSARY LIBRARIES AND MODULES
+IMPORT REQUESTS
+IMPORT JSON
+FROM FLASK IMPORT FLASK, REQUEST
+
+# INITIALIZE FLASK APP
+APP = FLASK(__NAME__)
+
+# DEFINE ROUTES FOR THE API
+@APP.ROUTE('/CONVERT', METHODS=['POST'])
+DEF CONVERT():
+    # PARSE INCOMING DATA FROM JSON FORMAT
+    INCOMING_DATA = REQUEST.JSON
+    VOUCHER_CODE = INCOMING_DATA['VOUCHER_CODE']
+    SENDER_BANK = INCOMING_DATA['SENDER_BANK']
+    RECEIVER_BANK = INCOMING_DATA['RECEIVER_BANK']
+    
+    # USE API ENDPOINT FROM SELECTED BANKS TO VALIDATE VOUCHER CODE AND OBTAIN AMOUNT
+    SENDER_API_ENDPOINT = F"HTTPS://{SENDER_BANK}.COM/API/VALIDATE_VOUCHER"
+    RECEIVER_API_ENDPOINT = F"HTTPS://{RECEIVER_BANK}.COM/API/CONVERT_VOUCHER"
+    
+    # MAKE A GET REQUEST TO THE SENDER API ENDPOINT TO VALIDATE VOUCHER CODE AND OBTAIN THE AMOUNT
+    RESPONSE = REQUESTS.GET(SENDER_API_ENDPOINT, PARAMS={'VOUCHER_CODE': VOUCHER_CODE})
+    DATA = JSON.LOADS(RESPONSE.TEXT)
+
+    # CHECK IF THE VOUCHER WAS VERIFIED SUCCESSFULLY
+    IF DATA['STATUS'] == 'VERIFIED':
+        # OBTAIN VOUCHER AMOUNT FROM RESPONSE
+        VOUCHER_AMOUNT = DATA['AMOUNT']
+        
+        # MAKE A POST REQUEST TO THE RECEIVER API ENDPOINT TO CONVERT VOUCHER AND PROCESS TRANSACTION 
+        PAYLOAD = {'VOUCHER_AMOUNT': VOUCHER_AMOUNT, 'VOUCHER_CODE': VOUCHER_CODE}
+        RESPONSE = REQUESTS.POST(RECEIVER_API_ENDPOINT, JSON=PAYLOAD)
+        DATA = JSON.LOADS(RESPONSE.TEXT)
+        
+        # CHECK IF THE TRANSACTION WAS COMPLETED SUCCESSFULLY
+        IF DATA['STATUS'] == 'COMPLETED':
+            RETURN JSON.DUMPS({'STATUS': 'OK', 'MESSAGE': 'TRANSACTION COMPLETED SUCCESSFULLY'})
+        ELSE:
+            RETURN JSON.DUMPS({'STATUS': 'ERROR', 'MESSAGE': 'TRANSACTION FAILED'})
+    ELSE:
+        RETURN JSON.DUMPS({'STATUS': 'ERROR', 'MESSAGE': 'INVALID VOUCHER CODE'})
+
+# START THE APP AND LISTEN FOR INCOMING REQUESTS
+IF __NAME__ == '__MAIN__':
+    APP.RUN(DEBUG=TRUE)
+```
+
+
+## Collaborate with GPT Engineer
+
+This is a [gptengineer.app](https://gptengineer.app)-synced repository 🌟🤖
+
+Changes made via gptengineer.app will be committed to this repo.
+
+If you clone this repo and push changes, you will have them reflected in the GPT Engineer UI.
+
+## Tech stack
+
+This project is built with React and Chakra UI.
+
+- Vite
+- React
+- Chakra UI
+
+## Setup
+
+```sh
+git clone https://github.com/GPT-Engineer-App/voucher-convert-api.git
+cd voucher-convert-api
+npm i
+```
+
+```sh
+npm run dev
+```
+
+This will run a dev server with auto reloading and an instant preview.
+
+## Requirements
+
+- Node.js & npm - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
