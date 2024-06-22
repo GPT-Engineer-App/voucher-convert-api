@@ -11,17 +11,17 @@ const UserDashboard = () => {
   const auth = getAuth();
   const user = auth.currentUser;
 
-  useEffect(() => {
-    const fetchVouchers = async () => {
-      if (user) {
-        const vouchersCollection = collection(db, "vouchers");
-        const q = query(vouchersCollection, where("userId", "==", user.uid));
-        const vouchersSnapshot = await getDocs(q);
-        const vouchersList = vouchersSnapshot.docs.map(doc => doc.data());
-        setVouchers(vouchersList);
-      }
-    };
+  const fetchVouchers = async () => {
+    if (user) {
+      const vouchersCollection = collection(db, "vouchers");
+      const q = query(vouchersCollection, where("userId", "==", user.uid));
+      const vouchersSnapshot = await getDocs(q);
+      const vouchersList = vouchersSnapshot.docs.map(doc => doc.data());
+      setVouchers(vouchersList);
+    }
+  };
 
+  useEffect(() => {
     fetchVouchers();
   }, [user]);
 
