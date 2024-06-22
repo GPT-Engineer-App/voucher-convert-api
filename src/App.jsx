@@ -9,6 +9,10 @@ import TransactionHistory from "./pages/TransactionHistory.jsx";
 import VoucherConversion from "./pages/VoucherConversion.jsx";
 import BankAPIIntegration from "./pages/BankAPIIntegration.jsx";
 import Navbar from "./components/Navbar.jsx";
+import AuditLogs from "./pages/AuditLogs.jsx";
+import AutomaticUpdates from "./pages/AutomaticUpdates.jsx";
+import BankPartnersManagement from "./pages/BankPartnersManagement.jsx";
+import RealTimeConversionRates from "./pages/RealTimeConversionRates.jsx";
 
 function App() {
   return (
@@ -24,6 +28,10 @@ function App() {
         <Route exact path="/transaction-history" element={<TransactionHistory />} />
         <Route exact path="/convert-voucher" element={<VoucherConversion />} />
         <Route exact path="/validate-voucher" element={<BankAPIIntegration />} />
+        <Route exact path="/bank-partners-management" element={<BankPartnersManagement />} />
+        <Route exact path="/real-time-conversion-rates" element={<RealTimeConversionRates />} />
+        <Route exact path="/audit-logs" element={<AuditLogs />} />
+        <Route exact path="/automatic-updates" element={<AutomaticUpdates />} />
       </Routes>
     </Router>
   );
